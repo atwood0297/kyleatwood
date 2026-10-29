@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Commercial Real Estate in Chillicothe & Ross County, OH | Kyle Atwood | ERA Martin</title>
-<meta name="description" content="Commercial real estate in Chillicothe and Ross County, Ohio. Office, retail, industrial, multi-family, land, and investment property with Kyle Atwood of ERA Martin & Associates."/>
+<title>Commercial Real Estate in Chillicothe & Southern Ohio | Kyle Atwood | ERA Martin</title>
+<meta name="description" content="Commercial real estate in Chillicothe and Southern Ohio. Office, retail, industrial, multi-family, land, and investment property with Kyle Atwood of ERA Martin & Associates."/>
 <link rel="canonical" href="https://www.kyleatwood.com/commercial"/>
 
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -166,6 +166,101 @@ a{color:inherit;text-decoration:none;}img{display:block;max-width:100%;}
   .frow{grid-template-columns:1fr;}
 }
 @media(max-width:1120px){.nav-links{display:none;}.nav-hb{display:flex;}}
+/* ===== INTERACTIVE TOOLS ===== */
+.calc{max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:430px 1fr;gap:2px;background:rgba(255,255,255,.05);}
+.calc-in,.calc-out{background:var(--p2);padding:28px 26px;}
+.calc-out{background:var(--dark);}
+.cg{margin-bottom:22px;}
+.cg:last-child{margin-bottom:0;}
+.cg h4{font-size:.62rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--red);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--rule);}
+.pre,.suf{position:relative;}
+.pre span,.suf span{position:absolute;top:50%;transform:translateY(-50%);font-size:.86rem;color:rgba(255,255,255,.4);pointer-events:none;}
+.pre span{left:11px;}.pre input{padding-left:24px!important;}
+.suf span{right:11px;}.suf input{padding-right:26px!important;}
+.rng{display:flex;align-items:center;gap:12px;}
+.rng input[type=range]{flex:1;-webkit-appearance:none;appearance:none;padding:0;height:4px;background:rgba(255,255,255,.16);border:none;border-radius:2px;outline:none;cursor:pointer;}
+.rng input[type=range]::-webkit-slider-runnable-track{height:4px;background:transparent;}
+.rng input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:20px;height:20px;margin-top:-8px;border-radius:50%;background:#E31937;border:2px solid #fff;box-shadow:0 0 0 0 rgba(227,25,55,.4);transition:box-shadow .2s;}
+.rng input[type=range]:hover::-webkit-slider-thumb,.rng input[type=range]:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 6px rgba(227,25,55,.3);}
+.rng input[type=range]::-moz-range-track{height:4px;background:rgba(255,255,255,.16);border-radius:2px;}
+.rng input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:#E31937;border:2px solid #fff;}
+.rng output{min-width:52px;text-align:right;font-size:.9rem;font-weight:600;color:#fff;}
+.seg{display:inline-flex;border:1px solid rgba(255,255,255,.16);margin-bottom:20px;}
+.seg button{background:transparent;border:none;color:rgba(255,255,255,.55);padding:10px 22px;font-family:"Inter",sans-serif;font-size:.74rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:all .18s;}
+.seg button.on{background:var(--red);color:#fff;}
+.seg button:not(.on):hover{color:#fff;}
+.sec>.seg{margin-left:max(0px,calc((100% - var(--max))/2));}
+@media(max-width:900px){.sec>.seg{margin-left:0;}}
+.big-l{font-size:.62rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:6px;display:block;}
+.big-v{font-family:"Playfair Display",serif;font-size:3.4rem;font-weight:700;color:#fff;line-height:1;margin-bottom:10px;}
+.big-v.neg,.tile .v.neg{color:#ff6b7d;}
+.verdict{font-size:.9rem;color:var(--muted);line-height:1.7;margin-bottom:22px;padding-bottom:20px;border-bottom:1px solid var(--rule);}
+.verdict strong{color:#fff;font-weight:600;}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:rgba(255,255,255,.05);margin-bottom:22px;}
+.tile{background:var(--p2);padding:14px 14px 13px;}
+.tile .k{font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.38);display:block;margin-bottom:5px;line-height:1.35;}
+.tile .v{font-size:1.15rem;font-weight:600;color:#fff;}
+.calc-act{display:flex;gap:10px;flex-wrap:wrap;}
+.calc-note{font-size:.68rem;color:rgba(255,255,255,.34);line-height:1.65;margin-top:16px;}
+.chart-wrap{margin:0 0 22px;}
+.chart-wrap svg{width:100%;height:auto;display:block;overflow:visible;}
+.chart-hd{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:8px;}
+.chart-hd .t{font-size:.62rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.4);}
+.chart-hd .rd{font-size:.82rem;color:#fff;font-weight:600;text-align:right;}
+.bar{cursor:pointer;transition:opacity .15s;}
+.bar.pos{fill:rgba(255,255,255,.55);}
+.bar.neg{fill:rgba(227,25,55,.75);}
+.bar.cur{fill:#fff;}
+.bar.cur.neg{fill:#ff4d66;}
+.chart-wrap svg:hover .bar:not(:hover){opacity:.55;}
+.axis{stroke:rgba(255,255,255,.18);stroke-width:1;}
+.zero{stroke:rgba(255,255,255,.45);stroke-width:1.2;stroke-dasharray:4 3;}
+.axl{font-family:"Inter",sans-serif;font-size:11px;fill:rgba(255,255,255,.42);}
+.curl{font-family:"Inter",sans-serif;font-size:11px;font-weight:700;fill:#fff;}
+.gloss{max-width:var(--max);margin:18px auto 0;}
+.gloss summary{cursor:pointer;font-size:.84rem;font-weight:600;color:#fff;padding:14px 0;list-style:none;border-bottom:1px solid var(--rule);position:relative;}
+.gloss summary::-webkit-details-marker{display:none;}
+.gloss summary::after{content:"+";position:absolute;right:4px;top:10px;font-size:1.3rem;color:var(--red);transition:transform .2s;}
+.gloss[open] summary::after{transform:rotate(45deg);}
+.gloss dl{padding:16px 0 4px;display:grid;grid-template-columns:200px 1fr;gap:10px 24px;}
+.gloss dt{font-size:.82rem;font-weight:700;color:#fff;}
+.gloss dd{font-size:.84rem;color:var(--muted);line-height:1.7;}
+.sendbox{display:none;margin-top:18px;padding-top:18px;border-top:1px solid var(--rule);}
+.sendbox.open{display:block;}
+.sendbox .consent{margin:10px 0;}
+.flash{animation:flash 1.6s ease;}
+@keyframes flash{0%,100%{box-shadow:0 0 0 0 rgba(227,25,55,0);}30%{box-shadow:0 0 0 6px rgba(227,25,55,.45);}}
+/* readiness score + checklists */
+.score-wrap{max-width:var(--max);margin:2px auto 0;display:grid;grid-template-columns:1fr 340px;gap:2px;background:rgba(255,255,255,.05);}
+.score-l{background:var(--p2);padding:30px 30px 26px;}
+.score-l h3,.score-r h3{font-family:"Playfair Display",serif;font-size:1.25rem;color:#fff;margin-bottom:6px;}
+.score-l .sub{font-size:.78rem;color:var(--muted);margin-bottom:18px;}
+.chk{display:flex;flex-direction:column;gap:2px;}
+.chk label{display:flex;gap:12px;align-items:flex-start;font-size:.86rem;color:rgba(255,255,255,.74);line-height:1.55;padding:10px 12px;background:rgba(255,255,255,.025);cursor:pointer;transition:background .15s;}
+.chk label:hover{background:rgba(255,255,255,.06);}
+.chk input{margin-top:3px;accent-color:#E31937;flex:0 0 auto;width:16px;height:16px;}
+.chk label.done{color:#fff;}
+.score-r{background:var(--dark);padding:30px 28px;display:flex;flex-direction:column;align-items:center;text-align:center;}
+.ring{position:relative;width:150px;height:150px;margin-bottom:16px;}
+.ring svg{width:150px;height:150px;transform:rotate(-90deg);}
+.ring .trk{fill:none;stroke:rgba(255,255,255,.08);stroke-width:10;}
+.ring .prg{fill:none;stroke:#E31937;stroke-width:10;stroke-linecap:round;stroke-dasharray:327;stroke-dashoffset:327;transition:stroke-dashoffset .6s cubic-bezier(.4,0,.2,1);}
+.ring .num{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.ring .num b{font-family:"Playfair Display",serif;font-size:2.6rem;color:#fff;line-height:1;}
+.ring .num span{font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-top:4px;}
+.score-msg{font-size:.9rem;color:var(--muted);line-height:1.7;margin-bottom:14px;}
+.score-msg strong{display:block;color:#fff;font-family:"Playfair Display",serif;font-size:1.15rem;margin-bottom:4px;}
+.todo{font-size:.76rem;color:rgba(255,255,255,.5);line-height:1.6;text-align:left;margin-bottom:16px;width:100%;}
+.todo b{color:#fff;display:block;margin-bottom:4px;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;}
+.bar-prog{height:6px;background:rgba(255,255,255,.08);margin:6px 0 14px;overflow:hidden;}
+.bar-prog i{display:block;height:100%;width:0;background:#E31937;transition:width .4s;}
+.prog-t{font-size:.72rem;color:var(--muted);display:flex;justify-content:space-between;}
+@media(max-width:900px){.calc{grid-template-columns:1fr;}.tiles{grid-template-columns:1fr 1fr;}.score-wrap{grid-template-columns:1fr;}.gloss dl{grid-template-columns:1fr;gap:2px 0;}.gloss dd{margin-bottom:10px;}.big-v{font-size:2.7rem;}}
+@media(max-width:540px){.calc-in,.calc-out{padding:22px 18px;}.score-l,.score-r{padding:24px 18px;}}
+@media(prefers-reduced-motion:reduce){.ring .prg,.bar-prog i{transition:none;}.flash{animation:none;}}
+
+.footer-eho{height:96px;width:auto;margin-left:auto;flex-shrink:0;}
+@media(max-width:900px){.footer-eho{margin-left:0;height:84px;}}
 </style>
 <style>
 .ph{position:relative;overflow:hidden;border-bottom:3px solid var(--red);padding:92px 48px 84px;background:linear-gradient(135deg,var(--blue-d) 0%,#0d0f24 60%,var(--dark) 100%);}
@@ -196,6 +291,8 @@ a{color:inherit;text-decoration:none;}img{display:block;max-width:100%;}
 .sec-in{max-width:var(--max);margin:0 auto;}
 .lead{font-size:.98rem;font-weight:300;color:var(--muted);line-height:1.85;max-width:760px;margin-bottom:14px;}
 .lead strong{color:#fff;font-weight:600;}
+.sec>.lead,.sec>.ph-btns{margin-left:max(0px,calc((100% - var(--max))/2));}
+@media(max-width:900px){.sec>.lead,.sec>.ph-btns{margin-left:0;}}
 .cards{max-width:var(--max);margin:0 auto;display:grid;gap:2px;background:rgba(255,255,255,.05);}
 .cards.c3{grid-template-columns:repeat(3,1fr);}
 .cards.c2{grid-template-columns:repeat(2,1fr);}
@@ -245,6 +342,8 @@ a{color:inherit;text-decoration:none;}img{display:block;max-width:100%;}
 }
 </style>
 
+<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments);};</script>
+<script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body>
 <div class="cb">
@@ -257,7 +356,7 @@ a{color:inherit;text-decoration:none;}img{display:block;max-width:100%;}
 <nav class="site-nav">
   <div class="nav-inner">
     <a href="/" class="nav-brand">
-      <img class="nav-logo-img" src="/assets/era-logo.png" alt="ERA Martin &amp; Associates"/>
+      <img class="nav-logo-img" src="data:image/png;base64,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" alt="ERA Martin &amp; Associates"/>
     </a>
     <ul class="nav-links">
       <li><a href="/">Home</a></li>
@@ -281,6 +380,7 @@ a{color:inherit;text-decoration:none;}img{display:block;max-width:100%;}
   <a href="/residential">Residential</a>
   <a href="/commercial">Commercial</a>
   <a href="/sell-my-house-fast-chillicothe">Sell Your House</a>
+  <a href="/airbnb-properties-ohio">Airbnb &amp; Short-Term Rentals</a>
   <a href="/business-brokerage">Business Brokerage</a>
   <a href="/join">Join the Team</a>
   <a href="/about">About Kyle</a>
@@ -289,13 +389,129 @@ a{color:inherit;text-decoration:none;}img{display:block;max-width:100%;}
 
 
 <section class="ph"><div class="bg" style="background-image:url('/assets/img-3c34f4739e.jpg');"></div><div class="ov"></div><div class="ph-in">
-  <div class="eyebrow">Commercial Real Estate · Ross County</div>
+  <div class="eyebrow">Commercial Real Estate · Southern Ohio</div>
   <h1 class="ph-h1">Commercial Real Estate <em>With an Operator's Eye.</em></h1>
   <p class="ph-p">Office, retail, industrial, multi-family, land, and investment property. Kyle has been active in commercial real estate since 2016, with a corporate M&amp;A background that shows in how he evaluates a deal.</p>
-  <div class="ph-btns"><a href="/listings?type=Commercial RE" class="btn btn-red">View Commercial Listings</a><a href="/contact" class="btn btn-ow">Talk to Kyle</a></div>
+  <div class="ph-btns"><a href="#analyzer" class="btn btn-red">Run the Numbers</a><a href="/listings?type=Commercial RE" class="btn btn-ow">View Commercial Listings</a><a href="/contact" class="btn btn-ow">Talk to Kyle</a></div>
 </div></section>
 <section class="sec"><div class="sec-head"><div class="eyebrow">What Kyle Handles</div><h2 class="h2">Buy, Sell,<br><em>Lease, Invest.</em></h2></div>
   <div class="chips"><div class="chip2">Office</div><div class="chip2">Retail</div><div class="chip2">Industrial &amp; Warehouse</div><div class="chip2">Multi-Family</div><div class="chip2">Land &amp; Development</div><div class="chip2">Investment Property</div><div class="chip2">Agricultural &amp; Specialty</div><div class="chip2">Leasing</div></div></section>
+<section class="sec" id="analyzer"><div class="sec-head"><div class="eyebrow">Run the Numbers</div><h2 class="h2">Commercial Deal<br><em>Analyzer.</em></h2></div>
+  <p class="lead">Enter a property's income and expenses to see its cap rate, what that income supports at a market cap rate, and how the deal looks with financing. The figures below are examples. Replace them with the property's actual numbers.</p>
+  <div class="calc">
+    <div class="calc-in">
+      <div class="cg"><h4>Income &amp; Expenses</h4>
+        <div class="field"><label>Asking or purchase price</label><div class="pre"><span>$</span><input type="text" inputmode="decimal" id="c_price" data-usd value="1,200,000"/></div></div>
+        <div class="field"><label>Gross annual rent (if fully leased)</label><div class="pre"><span>$</span><input type="text" inputmode="decimal" id="c_rent" data-usd value="140,000"/></div></div>
+        <div class="field"><label>Vacancy &amp; credit loss</label><div class="rng"><input type="range" id="c_vac" min="0" max="30" step="0.5" value="5" aria-label="Vacancy percent"/><output id="c_vac_v">5%</output></div></div>
+        <div class="field"><label>Annual operating expenses</label><div class="pre"><span>$</span><input type="text" inputmode="decimal" id="c_opex" data-usd value="42,000"/></div></div>
+        <div class="field"><label>Building size, sq ft (optional)</label><input type="text" inputmode="decimal" id="c_sqft" value="12,000"/></div>
+      </div>
+      <div class="cg"><h4>Market</h4>
+        <div class="field"><label>Market cap rate for similar properties</label><div class="rng"><input type="range" id="c_mcap" min="4" max="12" step="0.25" value="8" aria-label="Market cap rate percent"/><output id="c_mcap_v">8.00%</output></div></div>
+      </div>
+      <div class="cg"><h4>Financing (optional)</h4>
+        <div class="frow"><div class="field"><label>Down payment</label><div class="suf"><input type="text" inputmode="decimal" id="c_down" value="25"/><span>%</span></div></div>
+        <div class="field"><label>Interest rate</label><div class="suf"><input type="text" inputmode="decimal" id="c_rate" value="7"/><span>%</span></div></div></div>
+        <div class="frow"><div class="field"><label>Amortization (years)</label><input type="text" inputmode="decimal" id="c_yrs" value="25"/></div>
+        <div class="field"><label>Closing costs</label><div class="suf"><input type="text" inputmode="decimal" id="c_close" value="2"/><span>%</span></div></div></div>
+      </div>
+    </div>
+    <div class="calc-out">
+      <span class="big-l">Cap rate at this price</span>
+      <div class="big-v" id="c_big">—</div>
+      <p class="verdict" id="c_verdict"></p>
+      <div class="tiles">
+        <div class="tile"><span class="k">Effective gross income</span><span class="v" id="c_t1">—</span></div>
+        <div class="tile"><span class="k">Net operating income</span><span class="v" id="c_t2">—</span></div>
+        <div class="tile"><span class="k">Value at market cap rate</span><span class="v" id="c_t3">—</span></div>
+        <div class="tile"><span class="k">Price vs. income value</span><span class="v" id="c_t4">—</span></div>
+        <div class="tile"><span class="k">Gross rent multiplier</span><span class="v" id="c_t5">—</span></div>
+        <div class="tile"><span class="k">Price per sq ft</span><span class="v" id="c_t6">—</span></div>
+        <div class="tile"><span class="k">Annual debt service</span><span class="v" id="c_t7">—</span></div>
+        <div class="tile"><span class="k">Cash invested</span><span class="v" id="c_t8">—</span></div>
+        <div class="tile"><span class="k">Break-even occupancy</span><span class="v" id="c_t9">—</span></div>
+        <div class="tile"><span class="k">Cash flow after debt</span><span class="v" id="c_t10">—</span></div>
+        <div class="tile"><span class="k">Cash-on-cash return</span><span class="v" id="c_t11">—</span></div>
+        <div class="tile"><span class="k">Debt service coverage</span><span class="v" id="c_t12">—</span></div>
+      </div>
+      <div class="calc-act"><button type="button" class="btn btn-red" id="c_send">Send This Analysis to Kyle</button><button type="button" class="btn btn-ow" id="c_copy">Copy Summary</button></div>
+      <div class="sendbox" id="c_box">
+        <div id="c_form">
+          <div class="frow"><div class="field"><label>First Name</label><input type="text" id="cx1" placeholder="First"/></div><div class="field"><label>Last Name</label><input type="text" id="cx2" placeholder="Last"/></div></div>
+          <div class="frow"><div class="field"><label>Phone</label><input type="tel" id="cx3" placeholder="(000) 000-0000"/></div><div class="field"><label>Email</label><input type="email" id="cx4" placeholder="you@email.com"/></div></div>
+          <div class="field"><label>Anything Kyle should know? (optional)</label><textarea id="cx5" rows="2" style="resize:none;" placeholder="Property address, what you're considering…"></textarea></div>
+          <div class="consent"><input type="checkbox" id="cx6"/><label for="cx6">I agree to be contacted by Kyle Atwood about this property or commercial real estate by phone, email, and text. Message and data rates may apply. Reply STOP to opt out. Consent is not a condition of any purchase or sale.</label></div>
+          <button type="button" class="f-btn" id="cx_btn" style="animation:none;">Send to Kyle →</button>
+        </div>
+        <div class="f-ok" id="cx_ok"><h4>Sent. Thank you.</h4><p>Kyle will review your numbers and be in touch within 1 business day.<br/><strong style="color:var(--red);">740-649-8109</strong></p></div>
+      </div>
+      <p class="calc-note">For illustration only. Results are estimates built entirely from the figures you enter. They are not an appraisal, valuation, or guarantee, and they leave out income taxes, capital improvements, and lender-specific terms. Talk with a lender, CPA, and attorney before making decisions. This is not investment, tax, or legal advice.</p>
+    </div>
+  </div>
+  <details class="gloss"><summary>How these numbers are calculated</summary><dl>
+    <dt>Effective gross income</dt><dd>Gross annual rent minus vacancy and credit loss.</dd>
+    <dt>Net operating income (NOI)</dt><dd>Effective gross income minus operating expenses such as property taxes, insurance, maintenance, management, and utilities you pay. It excludes mortgage payments, depreciation, income taxes, and capital improvements.</dd>
+    <dt>Cap rate</dt><dd>NOI divided by the price. Value at a market cap rate is NOI divided by that rate.</dd>
+    <dt>Gross rent multiplier</dt><dd>Price divided by gross annual rent.</dd>
+    <dt>Debt service coverage (DSCR)</dt><dd>NOI divided by the annual loan payment. Below 1.0, income does not cover the payment.</dd>
+    <dt>Cash flow after debt</dt><dd>NOI minus the annual loan payment (standard amortizing loan).</dd>
+    <dt>Cash-on-cash return</dt><dd>Cash flow after debt divided by cash invested (down payment plus closing costs).</dd>
+    <dt>Break-even occupancy</dt><dd>The share of full rent needed to cover operating expenses and the loan payment: (operating expenses + debt service) ÷ gross annual rent.</dd>
+  </dl></details>
+</section>
+<script>
+(function(){
+  var $=function(i){return document.getElementById(i);};
+  function n(i){var v=parseFloat(String($(i).value).replace(/[^0-9.\-]/g,''));return isNaN(v)?0:v;}
+  function usd(x){return (x<0?'-$':'$')+Math.abs(Math.round(x)).toLocaleString('en-US');}
+  function pc(x,d){return (x*100).toFixed(d==null?1:d)+'%';}
+  var D='\u2014',LAST={};
+  function setv(i,t,neg){var e=$(i);e.textContent=t;e.classList.toggle('neg',!!neg);}
+  function pmtYr(L,rate,yrs){if(L<=0||yrs<=0)return 0;var r=rate/12,k=yrs*12;return (r===0?L/k:L*r/(1-Math.pow(1+r,-k)))*12;}
+  function run(){
+    var price=n('c_price'),rent=n('c_rent'),vac=n('c_vac')/100,opex=n('c_opex'),sf=n('c_sqft'),mc=n('c_mcap')/100;
+    var down=n('c_down')/100,loan=price*(1-down),ds=pmtYr(loan,n('c_rate')/100,n('c_yrs')),cash=price*down+price*n('c_close')/100;
+    var egi=rent*(1-vac),noi=egi-opex,cap=price>0?noi/price:null,cf=noi-ds;
+    var val=(noi>0&&mc>0)?noi/mc:null,diff=(val&&price>0)?price/val-1:null;
+    $('c_vac_v').textContent=n('c_vac')+'%';$('c_mcap_v').textContent=n('c_mcap').toFixed(2)+'%';
+    setv('c_big',cap==null?D:pc(cap,2),cap!=null&&cap<0);
+    var T={t1:usd(egi),t2:usd(noi),t3:val==null?D:usd(val),t4:diff==null?D:(Math.abs(diff)<.0005?'At value':pc(Math.abs(diff),1)+(diff>0?' above':' below')),
+      t5:(price>0&&rent>0)?(price/rent).toFixed(2)+'x':D,t6:(price>0&&sf>0)?usd(price/sf):D,t7:ds>0?usd(ds):'No loan',t8:usd(cash),
+      t9:rent>0?(function(){var b=(opex+ds)/rent;return b>1?'Over 100%':pc(b,0);})():D,t10:usd(cf),t11:cash>0?pc(cf/cash,1):D,t12:ds>0?(noi/ds).toFixed(2):D};
+    var NEG={t2:noi<0,t10:cf<0,t11:cash>0&&cf<0,t12:ds>0&&noi/ds<1};
+    for(var i=1;i<=12;i++){setv('c_t'+i,T['t'+i],NEG['t'+i]);}
+    var v;
+    if(price<=0||rent<=0)v='Enter a price and a gross annual rent to see results.';
+    else if(noi<=0)v='At these figures, operating expenses are higher than income, so the property has no positive net operating income.';
+    else{v='At a <strong>'+(mc*100).toFixed(2)+'%</strong> market cap rate, this income supports about <strong>'+usd(val)+'</strong>. The asking price is <strong>'+(Math.abs(diff)<.0005?'right at':pc(Math.abs(diff),1)+(diff>0?' above':' below'))+'</strong> that figure.';
+      if(ds>0)v+=' With <strong>'+Math.round(down*100)+'%</strong> down, the loan payment is about <strong>'+usd(ds)+'</strong> a year, a DSCR of <strong>'+(noi/ds).toFixed(2)+'</strong>, and cash flow after debt of <strong>'+usd(cf)+'</strong>.';}
+    $('c_verdict').innerHTML=v;
+    LAST={price:price,rent:rent,vac:vac,opex:opex,mc:mc,down:down,cap:cap,T:T};
+  }
+  function summary(){var L=LAST;return 'Commercial deal analysis\nPrice: '+usd(L.price)+' | Gross annual rent: '+usd(L.rent)+' | Vacancy: '+(L.vac*100).toFixed(1)+'% | Operating expenses: '+usd(L.opex)+'\nCap rate at price: '+(L.cap==null?D:pc(L.cap,2))+' | Market cap rate: '+(L.mc*100).toFixed(2)+'% | Down payment: '+Math.round(L.down*100)+'%\n'+
+    'NOI: '+L.T.t2+' | Value at market cap: '+L.T.t3+' | Price vs. income value: '+L.T.t4+'\nDebt service: '+L.T.t7+' | Cash flow after debt: '+L.T.t10+' | Cash-on-cash: '+L.T.t11+' | DSCR: '+L.T.t12+' | Break-even occupancy: '+L.T.t9+'\n(Example calculator estimates, not an appraisal.)';}
+  [].forEach.call(document.querySelectorAll('#analyzer [data-usd]'),function(e){e.addEventListener('blur',function(){var v=n(e.id);e.value=v?Math.round(v).toLocaleString('en-US'):'0';});});
+  [].forEach.call(document.querySelectorAll('#analyzer .calc-in input'),function(e){e.addEventListener('input',run);});
+  $('c_send').addEventListener('click',function(){var b=$('c_box');b.classList.add('open');b.scrollIntoView({behavior:'smooth',block:'nearest'});setTimeout(function(){$('cx1').focus({preventScroll:true});},350);});
+  $('c_copy').addEventListener('click',function(){var b=this,t=summary();
+    function ok(){var o=b.textContent;b.textContent='Copied \u2713';setTimeout(function(){b.textContent=o;},1600);}
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(ok,function(){});}
+    else{var a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{document.execCommand('copy');ok();}catch(e){}document.body.removeChild(a);}});
+  $('cx_btn').addEventListener('click',async function(){
+    var f=$('cx1').value.trim(),l=$('cx2').value.trim();if(!f||!l){alert('Please enter your name.');return;}
+    var ph=$('cx3').value.trim();if(!ph){alert('Please enter your phone number.');return;}
+    if(!$('cx6').checked){alert('Please check the consent box so Kyle can contact you.');return;}
+    var btn=this;btn.textContent='Sending\u2026';btn.style.opacity='.7';btn.disabled=true;
+    try{var res=await fetch('https://formspree.io/f/maqgzzpd',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({name:f+' '+l,phone:ph,email:$('cx4').value.trim()||'Not provided',notes:$('cx5').value.trim()||'None',analysis:summary(),consent_contact:'Yes - phone, email, text',inquiry_type:'Commercial deal analyzer',_subject:'Commercial Deal Analysis - '+f+' '+l})});
+      if(res.ok){$('c_form').style.display='none';$('cx_ok').style.display='block';}
+      else{btn.textContent='Send to Kyle \u2192';btn.style.opacity='1';btn.disabled=false;alert('Something went wrong. Please call 740-649-8109.');}
+    }catch(e){btn.textContent='Send to Kyle \u2192';btn.style.opacity='1';btn.disabled=false;alert('Something went wrong. Please call 740-649-8109.');}
+  });
+  run();
+})();
+</script>
+
 <section class="sec alt"><div class="sec-head"><div class="eyebrow">The Difference</div><h2 class="h2">Three Lenses<br><em>on Every Deal.</em></h2></div>
   <div class="cards c3">
     <div class="card"><div class="n">01</div><h3>Corporate M&amp;A Discipline</h3><p>Kyle has seen how large organizations evaluate acquisitions, so he underwrites a property the way a serious buyer would: cash flow, risk, and what really drives value.</p></div>
@@ -303,7 +519,7 @@ a{color:inherit;text-decoration:none;}img{display:block;max-width:100%;}
     <div class="card"><div class="n">03</div><h3>Transaction Rigor</h3><p>Leases, due diligence, financing, and contracts: Kyle keeps complex commercial deals moving to a clean closing.</p></div>
   </div></section>
 <section class="sec"><div class="sec-head"><div class="eyebrow">Business + Real Estate</div><h2 class="h2">When the Deal Includes<br><em>the Building.</em></h2></div>
-  <p class="lead">Many business sales involve real estate: a building, land, barns, or a lease that has to be assigned. Kyle is equipped to guide both sides: specialized property valuations, lease assignments, and deal structures that include the real estate alongside the business. <a href="/business-brokerage" style="color:var(--red);">Learn about business brokerage</a>.</p></section>
+  <p class="lead">Many business sales involve real estate: a building, land, barns, or a lease that has to be assigned. Kyle is equipped to guide both sides: specialized property valuations, lease assignments, and deal structures that include the real estate alongside the business. <a href="/business-brokerage" style="color:var(--red);">Learn about business brokerage</a>. Own or considering a short-term rental? <a href="/airbnb-properties-ohio" style="color:var(--red);">See how Kyle handles Airbnb properties</a>.</p></section>
 <section class="sec alt"><div class="sec-head"><div class="eyebrow">Listings</div><h2 class="h2">Commercial Properties<br><em>From the ERA Martin Team.</em></h2></div>
   <p class="lead">This site showcases commercial listings from Kyle and from other agents at ERA Martin &amp; Associates. Each listing shows the listing agent. Call or inquire on any property, and Kyle or the listing agent will follow up.</p>
   <div class="ph-btns" style="margin-top:18px;"><a href="/listings?type=Commercial RE" class="btn btn-red">Browse Commercial Listings</a></div></section>
@@ -311,14 +527,15 @@ a{color:inherit;text-decoration:none;}img{display:block;max-width:100%;}
   <div class="row"><a href="/contact" class="btn btn-red">Contact Kyle</a><a href="/listings" class="btn btn-ow">All Listings</a></div></section>
 <footer class="site-footer">
   <div class="footer-era">
-    <img class="footer-era-img" src="/assets/era-logo.png" alt="ERA Martin &amp; Associates"/>
-    <p><strong>ERA Martin &amp; Associates</strong> — Kyle Atwood is a Licensed Real Estate Salesperson serving buyers and sellers of residential and commercial property, and business owners ready to exit, throughout Chillicothe, Ross County, and the surrounding area.</p>
+    <img class="footer-era-img" src="data:image/png;base64,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" alt="ERA Martin &amp; Associates"/>
+    <p><strong>ERA Martin &amp; Associates</strong> — Kyle Atwood is a Licensed Real Estate Salesperson serving buyers and sellers of residential and commercial property, and business owners ready to exit, throughout Chillicothe and Southern Ohio.</p>
+    <img class="footer-eho" src="data:image/png;base64,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" alt="Equal Housing Opportunity" title="Equal Housing Opportunity" width="90" height="96"/>
   </div>
   <div class="footer-body">
     <div class="footer-grid">
       <div class="footer-col">
         <h5>Kyle Atwood</h5>
-        <p>Real Estate &amp; Business Brokerage. Chillicothe and Ross County, Ohio.</p>
+        <p>Real Estate &amp; Business Brokerage. Chillicothe and Southern Ohio.</p>
         <div class="footer-contacts">
           <a href="tel:7406498109">740-649-8109</a>
           <a href="mailto:katwoodrealtor@gmail.com">katwoodrealtor@gmail.com</a>
@@ -338,6 +555,7 @@ a{color:inherit;text-decoration:none;}img{display:block;max-width:100%;}
         <h5>Services</h5>
         <ul>
           <li><a href="/sell-my-house-fast-chillicothe">Sell Your House</a></li>
+          <li><a href="/airbnb-properties-ohio">Airbnb &amp; Short-Term Rentals</a></li>
           <li><a href="/business-brokerage">Business Brokerage</a></li>
           <li><a href="/join">Join the Team</a></li>
           <li><a href="/about">About Kyle</a></li>
