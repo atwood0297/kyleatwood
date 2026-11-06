@@ -1,1 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="robots" content="noindex,nofollow"/>
+<title>Admin | Kyle Atwood | ERA Martin &amp; Associates</title>
 
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;font-size:16px;}
+body{font-family:"Inter",sans-serif;background:#0a0a0f;color:#fff;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+a{color:inherit;text-decoration:none;}img{display:block;max-width:100%;}
+:root{
+  --red:#E31937;--red-d:#b5142b;
+  --blue:#273691;--blue-d:#1b2566;
+  --dark:#0a0a0f;--panel:#0f0f18;--p2:#141420;--p3:#1a1a28;
+  --rule:rgba(255,255,255,.07);--r2:rgba(255,255,255,.13);
+  --muted:rgba(255,255,255,.5);--faint:rgba(255,255,255,.25);
+  --max:1140px;
+}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 48px;}
+.eyebrow{font-size:.67rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--red);display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+.eyebrow::before{content:"";width:20px;height:2px;background:var(--red);flex-shrink:0;}
+.h2{font-family:"Playfair Display",serif;font-size:clamp(1.9rem,3.2vw,2.8rem);font-weight:700;line-height:1.12;letter-spacing:-.01em;color:#fff;margin-bottom:0;}
+.h2 em{font-style:italic;color:rgba(255,255,255,.42);font-weight:400;}
+.bp{font-size:.94rem;font-weight:300;color:var(--muted);line-height:1.82;}
+.rule{height:1px;background:var(--rule);}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;font-family:"Inter",sans-serif;font-size:.78rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;border:none;cursor:pointer;text-decoration:none;transition:all .18s;}
+.btn-red{background:var(--red);color:#fff;animation:rp 3s ease-in-out infinite;}
+.btn-red:hover{background:var(--red-d);animation:none;}
+.btn-blue{background:var(--blue);color:#fff;}
+.btn-blue:hover{background:var(--blue-d);}
+.btn-or{background:transparent;color:var(--red);border:1.5px solid var(--red);}
+.btn-or:hover{background:var(--red);color:#fff;}
+.btn-ow{background:transparent;color:rgba(255,255,255,.75);border:1.5px solid rgba(255,255,255,.25);}
+.btn-ow:hover{border-color:#fff;color:#fff;}
+.btn-sm{padding:8px 18px;font-size:.72rem;}
+@keyframes rp{0%,100%{box-shadow:0 0 0 0 rgba(227,25,55,0);}50%{box-shadow:0 0 0 8px rgba(227,25,55,.18);}}
+
+/* COMPLIANCE BAR */
+.cb{background:var(--blue-d);padding:6px 48px;display:flex;justify-content:space-between;align-items:center;}
+.cb span{font-size:.69rem;color:rgba(255,255,255,.55);letter-spacing:.02em;}
+.cb strong{color:rgba(255,255,255,.88);font-weight:600;}
+.cb-r{display:flex;gap:18px;}
+.cb-r a{font-size:.69rem;color:rgba(255,255,255,.55);transition:color .15s;}
+.cb-r a:hover{color:#fff;}
+
+/* NAV */
+.site-nav{
+  position:sticky;top:0;z-index:1000;
+  background:rgba(8,8,14,.97);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-bottom:3px solid var(--red);
+  box-shadow:0 2px 28px rgba(0,0,0,.5);
+}
+.nav-inner{max-width:var(--max);margin:0 auto;padding:0 48px;display:flex;align-items:center;justify-content:space-between;gap:20px;}
+.nav-brand{display:flex;align-items:center;text-decoration:none;flex-shrink:0;padding:8px 0;}
+.nav-logo-img{height:68px;width:auto;object-fit:contain;display:block;}
+.nav-brand-sub{font-size:.57rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-top:3px;}
+.nav-links{display:flex;align-items:center;gap:0;list-style:none;}
+.nav-links a{display:block;padding:8px 12px;font-size:.76rem;font-weight:500;color:rgba(255,255,255,.48);transition:color .15s;white-space:nowrap;position:relative;}
+.nav-links a::after{content:"";position:absolute;bottom:0;left:12px;right:12px;height:2px;background:var(--red);transform:scaleX(0);transition:transform .18s;}
+.nav-links a:hover{color:#fff;}.nav-links a:hover::after,.nav-links a.active::after{transform:scaleX(1);}
+.nav-links a.active{color:#fff;}
+.nav-cta{background:var(--red)!important;color:#fff!important;padding:8px 20px!important;font-weight:700!important;animation:rp 3s ease-in-out infinite;}
+.nav-cta:hover{background:var(--red-d)!important;animation:none!important;}
+.nav-cta::after{display:none!important;}
+.nav-hb{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px;}
+.nav-hb span{display:block;width:22px;height:1.5px;background:rgba(255,255,255,.7);transition:all .22s;}
+.nav-hb.open span:nth-child(1){transform:rotate(45deg) translate(4.5px,4.5px);}
+.nav-hb.open span:nth-child(2){opacity:0;}
+.nav-hb.open span:nth-child(3){transform:rotate(-45deg) translate(4.5px,-4.5px);}
+.nav-mob{display:none;position:fixed;top:0;left:0;right:0;background:rgba(8,8,14,.99);backdrop-filter:blur(20px);padding:128px 24px 28px;z-index:998;flex-direction:column;gap:2px;}
+.nav-mob.open{display:flex;}
+.nav-mob a{display:block;padding:13px 4px;font-size:.92rem;font-weight:500;color:rgba(255,255,255,.55);border-bottom:1px solid var(--rule);transition:color .15s;}
+.nav-mob a:hover{color:var(--red);}
+.nav-mob a:last-child{border-bottom:none;}
+.nav-mob .mc{margin-top:12px;background:var(--red);color:#fff!important;text-align:center;font-weight:700!important;padding:14px!important;border-bottom:none!important;}
+
+/* FOOTER */
+.site-footer{background:#060609;border-top:3px solid var(--red);}
+.footer-era{background:var(--blue-d);padding:24px 48px;display:flex;align-items:center;gap:28px;border-bottom:1px solid rgba(255,255,255,.08);}
+.footer-era-img{height:84px;width:auto;object-fit:contain;flex-shrink:0;}
+.footer-era p{font-size:.82rem;color:rgba(255,255,255,.6);line-height:1.65;max-width:560px;}
+.footer-era strong{color:#fff;}
+.footer-body{padding:52px 48px 40px;max-width:var(--max);margin:0 auto;}
+.footer-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:44px;padding-bottom:40px;border-bottom:1px solid var(--rule);margin-bottom:22px;}
+.footer-col h5{font-size:.62rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.2);margin-bottom:14px;}
+.footer-col p{font-size:.79rem;color:rgba(255,255,255,.28);line-height:1.65;margin-bottom:14px;}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:8px;}
+.footer-col ul a{font-size:.8rem;color:rgba(255,255,255,.3);transition:color .15s;}
+.footer-col ul a:hover{color:var(--red);}
+.footer-contacts{display:flex;flex-direction:column;gap:6px;}
+.footer-contacts a{font-size:.78rem;color:rgba(255,255,255,.3);transition:color .15s;}
+.footer-contacts a:hover{color:var(--red);}
+.footer-bot{display:flex;justify-content:space-between;align-items:center;font-size:.67rem;color:rgba(255,255,255,.15);flex-wrap:wrap;gap:8px;}
+.footer-bot a{color:rgba(255,255,255,.15);transition:color .15s;}
+.footer-bot a:hover{color:rgba(255,255,255,.4);}
+.footer-comp{background:rgba(255,255,255,.02);padding:13px 48px;font-size:.63rem;color:rgba(255,255,255,.19);line-height:1.65;text-align:center;border-top:1px solid var(--rule);}
+
+/* LISTING CARD */
+.lcard{background:var(--panel);border:1px solid var(--rule);overflow:hidden;transition:border-color .2s,transform .2s;display:block;color:inherit;text-decoration:none;}
+.lcard:hover{border-color:rgba(255,255,255,.18);transform:translateY(-3px);}
+.lcard-img{height:200px;overflow:hidden;position:relative;background:var(--p2);display:flex;align-items:center;justify-content:center;font-size:2.5rem;}
+.lcard-img img{width:100%;height:100%;object-fit:cover;transition:transform .55s;}
+.lcard:hover .lcard-img img{transform:scale(1.05);}
+.lcard-badge{position:absolute;top:0;left:0;background:var(--red);color:#fff;font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:5px 12px;}
+.lcard-badge.sold{background:#333;}
+.lcard-badge.pending{background:var(--blue);}
+.lcard-body{padding:18px 18px 20px;}
+.lcard-price{font-family:"Playfair Display",serif;font-size:1.3rem;font-weight:700;color:#fff;margin-bottom:3px;}
+.lcard-addr{font-size:.85rem;font-weight:500;color:rgba(255,255,255,.75);margin-bottom:3px;}
+.lcard-type{font-size:.7rem;color:var(--muted);margin-bottom:10px;}
+.lcard-desc{font-size:.78rem;color:var(--muted);line-height:1.55;margin-bottom:10px;}
+.lcard-meta{display:flex;gap:12px;padding-top:10px;border-top:1px solid var(--rule);flex-wrap:wrap;}
+.lcard-stat{font-size:.72rem;color:var(--muted);}
+.lcard-stat strong{color:rgba(255,255,255,.62);font-weight:600;}
+.lcard-btns{display:grid;grid-template-columns:1fr 1fr;gap:1px;margin-top:10px;background:var(--rule);}
+.lcard-btn{padding:9px;text-align:center;font-size:.69rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;background:var(--p2);color:rgba(255,255,255,.5);transition:all .15s;cursor:pointer;border:none;font-family:"Inter",sans-serif;text-decoration:none;display:block;}
+.lcard-btn:hover{background:var(--red);color:#fff;}
+
+/* SOLD CARD */
+.scard{background:var(--panel);border:1px solid var(--rule);overflow:hidden;transition:border-color .2s;}
+.scard:hover{border-color:rgba(255,255,255,.15);}
+.scard-img{height:160px;overflow:hidden;position:relative;background:var(--p2);display:flex;align-items:center;justify-content:center;font-size:2rem;}
+.scard-img img{width:100%;height:100%;object-fit:cover;filter:grayscale(20%);}
+.scard-badge{position:absolute;top:0;left:0;background:#1a1a1a;color:rgba(255,255,255,.6);font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-right:2px solid var(--red);}
+.scard-body{padding:14px 16px;}
+.scard-price{font-family:"Playfair Display",serif;font-size:1.1rem;font-weight:700;color:var(--red);margin-bottom:2px;}
+.scard-addr{font-size:.82rem;font-weight:500;color:rgba(255,255,255,.7);margin-bottom:2px;}
+.scard-meta{font-size:.7rem;color:var(--muted);}
+
+/* FIELD */
+.field{margin-bottom:9px;}
+.field label{display:block;font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.27);margin-bottom:4px;}
+.field input,.field select,.field textarea{width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:#fff;padding:9px 11px;font-family:"Inter",sans-serif;font-size:.85rem;outline:none;appearance:none;transition:border-color .18s;}
+.field input::placeholder,.field textarea::placeholder{color:rgba(255,255,255,.18);}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--red);}
+.field select option{background:#111;}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+
+@media(max-width:900px){
+  .cb{padding:6px 20px;flex-direction:column;align-items:flex-start;gap:3px;}
+  .cb-r{display:none;}
+  .nav-inner{padding:0 20px;}
+  .nav-links{display:none;}
+  .nav-hb{display:flex;}
+  .wrap{padding:0 20px;}
+  .footer-era{padding:18px 20px;flex-direction:column;align-items:flex-start;gap:12px;}
+  .footer-body{padding:40px 20px 32px;}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:28px;}
+  .footer-comp{padding:12px 20px;}
+}
+@media(max-width:540px){
+  .nav-logo-img{height:46px;}
+  .footer-era-img{height:64px;}
+  .footer-grid{grid-template-columns:1fr;}
+  .footer-bot{flex-direction:column;text-align:center;}
+  .frow{grid-template-columns:1fr;}
+}
+@media(max-width:1120px){.nav-links{display:none;}.nav-hb{display:flex;}}
+.up-st{font-size:.74rem;color:var(--muted);margin-top:6px;min-height:1em;}
+.sv-btn:disabled,.lb-btn:disabled{opacity:.6;cursor:not-allowed;animation:none;}
+</style>
+<style>
+body{background:var(--dark);}
+/* LOGIN */
+.login{min-height:100svh;display:flex;align-items:center;justify-content:center;background:var(--dark);}
+.lb{background:var(--panel);border:1px solid var(--rule);border-top:3px solid var(--red);padding:44px;width:100%;max-width:380px;}
+.lb img{height:60px;width:auto;margin-bottom:28px;}
+.lb h2{font-family:"Playfair Display",serif;font-size:1.3rem;color:#fff;margin-bottom:5px;}
+.lb p{font-size:.8rem;color:var(--muted);margin-bottom:22px;}
+.login-err{font-size:.78rem;color:var(--red);margin-bottom:10px;display:none;}
+.lb-btn{display:block;width:100%;background:var(--red);color:#fff;border:none;padding:12px;font-family:"Inter",sans-serif;font-size:.79rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;cursor:pointer;margin-top:8px;transition:background .18s;}
+.lb-btn:hover{background:var(--red-d);}
+/* PANEL */
+.admin-wrap{display:none;min-height:100svh;}
+.adm-hdr{background:var(--blue-d);padding:16px 44px;display:flex;justify-content:space-between;align-items:center;border-bottom:3px solid var(--red);}
+.adm-hdr h1{font-family:"Playfair Display",serif;font-size:1.3rem;color:#fff;}
+.adm-hdr-r{display:flex;align-items:center;gap:14px;}
+.adm-hdr-r a{font-size:.75rem;color:rgba(255,255,255,.55);transition:color .15s;}
+.adm-hdr-r a:hover{color:#fff;}
+.lo-btn{background:rgba(255,255,255,.08);color:rgba(255,255,255,.6);border:1px solid rgba(255,255,255,.14);padding:6px 14px;font-size:.7rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;cursor:pointer;font-family:"Inter",sans-serif;transition:all .18s;}
+.lo-btn:hover{background:var(--red);border-color:var(--red);color:#fff;}
+/* Tabs */
+.adm-tabs{background:var(--panel);border-bottom:1px solid var(--rule);padding:0 44px;display:flex;gap:0;}
+.atab{padding:13px 20px;font-size:.76rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:none;border:none;color:rgba(255,255,255,.38);cursor:pointer;font-family:"Inter",sans-serif;border-bottom:3px solid transparent;transition:all .18s;}
+.atab:hover{color:rgba(255,255,255,.65);}
+.atab.active{color:#fff;border-bottom-color:var(--red);}
+/* Body */
+.adm-body{max-width:1200px;margin:0 auto;padding:36px 44px;display:grid;grid-template-columns:400px 1fr;gap:32px;align-items:start;}
+/* Form */
+.adm-form{background:var(--panel);border:1px solid var(--rule);border-top:3px solid var(--red);padding:26px;}
+.adm-form h2{font-family:"Playfair Display",serif;font-size:1.05rem;color:#fff;margin-bottom:18px;}
+.fsec{font-size:.59rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.22);margin:14px 0 8px;padding-top:12px;border-top:1px solid var(--rule);}
+.sv-btn{display:block;width:100%;background:var(--red);color:#fff;border:none;padding:12px;font-family:"Inter",sans-serif;font-size:.78rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;cursor:pointer;margin-top:14px;transition:background .18s;animation:rp 3s ease-in-out infinite;}
+.sv-btn:hover{background:var(--red-d);animation:none;}
+.cl-btn{display:block;width:100%;background:var(--p2);color:rgba(255,255,255,.4);border:1px solid var(--rule);padding:9px;font-family:"Inter",sans-serif;font-size:.73rem;font-weight:600;cursor:pointer;margin-top:7px;transition:all .18s;}
+.cl-btn:hover{border-color:rgba(255,255,255,.25);color:rgba(255,255,255,.65);}
+.sv-msg{font-size:.76rem;color:#4caf50;text-align:center;margin-top:8px;display:none;font-weight:600;}
+/* Table */
+.adm-tbl{min-width:0;}
+.tbl-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
+.tbl-hdr h2{font-family:"Playfair Display",serif;font-size:1.05rem;color:#fff;}
+.lct{font-size:.74rem;color:var(--muted);}
+.ar{background:var(--panel);border:1px solid var(--rule);padding:13px 15px;margin-bottom:2px;display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center;transition:border-color .18s;}
+.ar:hover{border-color:rgba(255,255,255,.14);}
+.ar-name{font-weight:600;font-size:.86rem;color:#fff;margin-bottom:2px;}
+.ar-meta{font-size:.72rem;color:var(--muted);}
+.ar-price{font-family:"Playfair Display",serif;font-size:.98rem;font-weight:700;color:var(--red);text-align:right;margin-bottom:5px;}
+.ar-acts{display:flex;gap:5px;margin-top:5px;}
+.ar-btn{padding:4px 11px;font-size:.67rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;border:none;cursor:pointer;font-family:"Inter",sans-serif;transition:opacity .15s;}
+.ar-btn:hover{opacity:.8;}
+.ab-edit{background:var(--blue);color:#fff;}
+.ab-tog{background:var(--p3);color:rgba(255,255,255,.55);border:1px solid var(--rule);}
+.ab-del{background:#180808;color:#c44;border:1px solid rgba(180,40,40,.2);}
+.as-badge{display:inline-block;padding:2px 8px;font-size:.59rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-left:6px;}
+.asb-active{background:rgba(76,175,80,.12);color:#4caf50;}
+.asb-pending{background:rgba(39,54,145,.18);color:#7b9de8;}
+.asb-sold{background:rgba(255,255,255,.05);color:rgba(255,255,255,.3);}
+.no-ls{text-align:center;padding:48px 20px;background:var(--panel);border:1px solid var(--rule);}.no-ls p{font-size:.86rem;color:var(--muted);}
+/* Photo preview */
+.img-prev{display:none;margin-top:8px;}
+.img-prev img{width:100%;height:110px;object-fit:cover;border:1px solid var(--rule);}
+@media(max-width:960px){
+  .adm-body{grid-template-columns:1fr;padding:24px 20px;}
+  .adm-hdr{padding:14px 20px;}
+  .adm-tabs{padding:0 20px;}
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div class="login" id="login">
+  <div class="lb">
+    <img src="data:image/png;base64,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" alt="ERA Martin &amp; Associates"/>
+    <h2>Admin Panel</h2>
+    <p>Kyle Atwood · ERA Martin &amp; Associates</p>
+    <div class="login-err" id="lerr">Incorrect password.</div>
+    <div class="field">
+      <label>Password</label>
+      <input type="password" id="pw" placeholder="Enter admin password" onkeydown="if(event.key==='Enter')login()"/>
+    </div>
+    <button class="lb-btn" onclick="login()">Sign In →</button>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div class="admin-wrap" id="adm">
+
+  <div class="adm-hdr">
+    <div>
+      <h1>Listings Admin</h1>
+      <div style="font-size:.7rem;color:rgba(255,255,255,.4);margin-top:2px;">Kyle Atwood · ERA Martin &amp; Associates</div>
+    </div>
+    <div class="adm-hdr-r">
+      <a href="/listings" target="_blank">Listings ↗</a>
+      <a href="/sold" target="_blank">Sold ↗</a>
+      <button class="lo-btn" onclick="logout()">Sign Out</button>
+    </div>
+  </div>
+
+  <!-- TABS: Active Listings | Sold/Closed -->
+  <div class="adm-tabs">
+    <button class="atab active" id="tab-listings" onclick="switchTab('listings')">Active Listings</button>
+    <button class="atab" id="tab-sold" onclick="switchTab('sold')">Sold / Closed</button>
+  </div>
+
+  <div class="adm-body">
+    <!-- FORM (shared, changes based on tab) -->
+    <div class="adm-form">
+      <h2 id="form-ttl">Add New Listing</h2>
+
+      <div class="fsec">Type &amp; Status</div>
+      <div class="field">
+        <label>Type *</label>
+        <select id="a-type">
+          <option value="">Select…</option>
+          <option>Residential</option>
+          <option>Commercial RE</option>
+          <option>Business for Sale</option>
+          <option>Land</option>
+          <option>Investment</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Sub-type *</label>
+        <input type="text" id="a-sub" placeholder="e.g. Ranch Home, Retail Strip, HVAC Business, Farm…"/>
+      </div>
+      <div class="field">
+        <label>Listing Agent * (credited on the listing)</label>
+        <input type="text" id="a-agent" placeholder="Kyle Atwood, or the agent who holds the listing"/>
+      </div>
+      <div class="field">
+        <label>Listing Brokerage</label>
+        <input type="text" id="a-broker" placeholder="ERA Martin &amp; Associates"/>
+      </div>
+      <div class="field" id="status-row">
+        <label>Status</label>
+        <select id="a-status">
+          <option value="active">Active</option>
+          <option value="pending">Pending</option>
+        </select>
+      </div>
+
+      <div class="fsec">Property Details</div>
+      <div class="field">
+        <label>Address / Name *</label>
+        <input type="text" id="a-addr" placeholder="123 Maple St or 'Confidential – HVAC Business'"/>
+      </div>
+      <div class="frow">
+        <div class="field"><label>City *</label><input type="text" id="a-city" placeholder="Chillicothe"/></div>
+        <div class="field"><label>ZIP</label><input type="text" id="a-zip" placeholder="45601"/></div>
+      </div>
+      <div class="field">
+        <label id="price-lbl">Price *</label>
+        <input type="text" id="a-price" placeholder="$249,900 or Call for Pricing"/>
+      </div>
+      <div class="field" id="sold-date-row" style="display:none;">
+        <label>Sold / Close Date</label>
+        <input type="date" id="a-sold-date"/>
+      </div>
+
+      <div class="fsec">Details</div>
+      <div class="frow">
+        <div class="field"><label>Sq Ft</label><input type="text" id="a-sqft" placeholder="1,800"/></div>
+        <div class="field"><label>Acres</label><input type="text" id="a-acres" placeholder="0.25"/></div>
+      </div>
+      <div class="frow">
+        <div class="field"><label>Bedrooms</label><input type="text" id="a-beds" placeholder="3"/></div>
+        <div class="field"><label>Bathrooms</label><input type="text" id="a-baths" placeholder="2"/></div>
+      </div>
+      <div class="field"><label>Cap Rate (investments)</label><input type="text" id="a-cap" placeholder="6.5%"/></div>
+
+      <div class="fsec">Description &amp; Photo</div>
+      <div class="field">
+        <label>Description</label>
+        <textarea id="a-desc" rows="3" style="resize:none;" placeholder="Description shown on listing card…"></textarea>
+      </div>
+      <div class="field">
+        <label>Photo URL</label>
+        <input type="text" id="a-url" placeholder="https://… (leave blank for icon)"/>
+      </div>
+      <div class="field">
+        <label>Upload Photo (resized automatically)</label>
+        <input type="file" id="a-file" accept="image/*" style="font-size:.8rem;color:rgba(255,255,255,.45);"/>
+      </div>
+      <div class="img-prev" id="img-prev"><img id="img-prev-img" alt="preview"/></div>
+      <div class="up-st" id="up-st"></div>
+
+      <button class="sv-btn" id="sv-btn" onclick="save()">Save Listing</button>
+      <button class="cl-btn" onclick="clearF()">Clear Form</button>
+      <div class="sv-msg" id="sv-msg">✓ Saved!</div>
+    </div>
+
+    <!-- TABLE -->
+    <div class="adm-tbl">
+      <div class="tbl-hdr">
+        <h2 id="tbl-ttl">Active Listings</h2>
+        <span class="lct" id="lct">0 listings</span>
+      </div>
+      <div id="adm-tbl"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+var editId=null,currentTab="listings",ALL=[],uploading=false;
+function $(i){return document.getElementById(i);}
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+
+/* ---- talk to the server ---- */
+function api(action,body,qs){
+  var o={credentials:"same-origin",headers:{}};
+  if(body!==undefined){o.method="POST";o.headers["Content-Type"]="application/json";o.headers["X-Requested-With"]="kyle-admin";o.body=JSON.stringify(body);}
+  return fetch("/api/site?action="+action+(qs||""),o).then(function(r){
+    return r.json().catch(function(){return {};}).then(function(d){d._status=r.status;return d;});
+  });
+}
+function loadAll(){
+  return fetch("/api/site?action=list&fresh="+Date.now(),{credentials:"same-origin"}).then(function(r){return r.json();}).then(function(d){
+    ALL=d.listings||[];renderTable();
+  }).catch(function(){ALL=[];renderTable();});
+}
+
+/* ---- login ---- */
+function showPanel(){$("login").style.display="none";$("adm").style.display="block";loadAll();}
+function showLogin(msg){
+  $("login").style.display="flex";$("adm").style.display="none";
+  var e=$("lerr");if(msg){e.textContent=msg;e.style.display="block";}else e.style.display="none";
+}
+function login(){
+  var pw=$("pw").value,btn=document.querySelector(".lb-btn"),err=$("lerr");
+  if(!pw){err.textContent="Enter your password.";err.style.display="block";return;}
+  btn.disabled=true;btn.textContent="Signing in…";
+  api("login",{password:pw}).then(function(d){
+    btn.disabled=false;btn.textContent="Sign In →";$("pw").value="";
+    if(d.ok){err.style.display="none";showPanel();return;}
+    var m="Incorrect password.";
+    if(d._status===429)m="Too many attempts. Try again in 15 minutes.";
+    else if(d.error==="not_configured")m="The server is not set up yet. Follow SETUP.md.";
+    else if(d._status>=500)m="Temporarily unavailable. Try again shortly.";
+    err.textContent=m;err.style.display="block";
+  }).catch(function(){btn.disabled=false;btn.textContent="Sign In →";err.textContent="Could not reach the server. Check your connection.";err.style.display="block";});
+}
+function logout(){api("logout",{}).then(function(){ALL=[];showLogin();}).catch(function(){showLogin();});}
+api("session").then(function(d){
+  if(d.ok)showPanel();
+  else if(d.configured===false)showLogin("The server is not set up yet. Follow SETUP.md.");
+}).catch(function(){});
+
+/* ---- tabs ---- */
+function switchTab(tab){
+  currentTab=tab;
+  $("tab-listings").classList.toggle("active",tab==="listings");
+  $("tab-sold").classList.toggle("active",tab==="sold");
+  $("sold-date-row").style.display = tab==="sold"?"block":"none";
+  $("status-row").style.display = tab==="listings"?"block":"none";
+  $("price-lbl").textContent = tab==="sold"?"Sold Price *":"Price *";
+  $("form-ttl").textContent = tab==="sold"?"Add Closed Transaction":"Add New Listing";
+  $("sv-btn").textContent = tab==="sold"?"Save Closing":"Save Listing";
+  $("tbl-ttl").textContent = tab==="sold"?"Sold / Closed":"Active Listings";
+  clearF();renderTable();
+}
+
+/* ---- save / edit / delete ---- */
+function readForm(isSold,statusOverride){
+  return {
+    is_sold:isSold,type:$("a-type").value,subtype:$("a-sub").value,agent:$("a-agent").value,brokerage:$("a-broker").value,
+    address:$("a-addr").value,city:$("a-city").value,zip:$("a-zip").value,price:$("a-price").value,
+    status:statusOverride||(isSold?"sold":$("a-status").value),sold_date:$("a-sold-date").value||"",
+    sqft:$("a-sqft").value,acres:$("a-acres").value,beds:$("a-beds").value,baths:$("a-baths").value,cap:$("a-cap").value,
+    description:$("a-desc").value,image:$("a-url").value.trim()
+  };
+}
+function fail(d){
+  if(d&&d._status===401){showLogin("Your session ended. Please sign in again.");return;}
+  alert((d&&d.message)||"That did not save. Please try again.");
+}
+function save(){
+  if(uploading){alert("Please wait for the photo to finish uploading.");return;}
+  var l=readForm(currentTab==="sold");
+  if(!l.type||!l.address.trim()||!l.price.trim()){alert("Type, Address, and Price are required.");return;}
+  if(!l.agent.trim()){alert("Enter the listing agent. Their name is credited on the listing.");$("a-agent").focus();return;}
+  var btn=$("sv-btn"),label=btn.textContent;btn.disabled=true;btn.textContent="Saving…";
+  api("save",{id:editId||undefined,listing:l}).then(function(d){
+    btn.disabled=false;btn.textContent=label;
+    if(!d.ok){fail(d);return;}
+    var m=$("sv-msg");m.style.display="block";setTimeout(function(){m.style.display="none";},2500);
+    clearF();loadAll();
+  }).catch(function(){btn.disabled=false;btn.textContent=label;alert("Could not reach the server.");});
+}
+function find(id){for(var i=0;i<ALL.length;i++)if(ALL[i].id===id)return ALL[i];return null;}
+function editRow(id){
+  var l=find(id);if(!l)return;
+  editId=id;currentTab=l.is_sold?"sold":"listings";switchTab(currentTab);editId=id;
+  $("form-ttl").textContent="Edit "+(l.is_sold?"Closing":"Listing");$("sv-btn").textContent="Update";
+  var set=function(k,v){$(k).value=v==null?"":v;};
+  set("a-type",l.type);set("a-sub",l.subtype);set("a-agent",l.agent);set("a-broker",l.brokerage);set("a-status",l.status||"active");
+  set("a-addr",l.address);set("a-city",l.city);set("a-zip",l.zip);set("a-price",l.price);set("a-sold-date",l.sold_date);
+  set("a-sqft",l.sqft);set("a-acres",l.acres);set("a-beds",l.beds);set("a-baths",l.baths);set("a-cap",l.cap);
+  set("a-desc",l.description);set("a-url",l.image);
+  if(l.image){$("img-prev-img").src=l.image;$("img-prev").style.display="block";}
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+function toggleStatus(id){
+  var l=find(id);if(!l)return;
+  var next=l.status==="active"?"pending":"active";
+  var copy={};for(var k in l)copy[k]=l[k];copy.status=next;copy.sold_date=l.sold_date||"";
+  api("save",{id:id,listing:copy}).then(function(d){if(!d.ok){fail(d);return;}loadAll();});
+}
+function del(id){
+  if(!confirm("Delete this record permanently?"))return;
+  api("delete",{id:id}).then(function(d){if(!d.ok){fail(d);return;}loadAll();});
+}
+function clearF(){
+  editId=null;
+  $("form-ttl").textContent=currentTab==="sold"?"Add Closed Transaction":"Add New Listing";
+  $("sv-btn").textContent=currentTab==="sold"?"Save Closing":"Save Listing";
+  ["a-type","a-sub","a-agent","a-broker","a-addr","a-city","a-zip","a-price","a-sqft","a-acres","a-beds","a-baths","a-cap","a-desc","a-url"].forEach(function(id){
+    var el=$(id);if(el.tagName==="SELECT")el.selectedIndex=0;else el.value="";
+  });
+  $("a-status").value="active";$("a-sold-date").value="";
+  $("img-prev").style.display="none";$("img-prev-img").src="";$("a-file").value="";$("up-st").textContent="";
+}
+
+/* ---- table ---- */
+function renderTable(){
+  var data=ALL.filter(function(l){return currentTab==="sold"?l.is_sold:!l.is_sold;});
+  $("lct").textContent=data.length+" record"+(data.length!==1?"s":"");
+  var c=$("adm-tbl");
+  if(!data.length){c.innerHTML='<div class="no-ls"><p>No records yet. Use the form to add one.</p></div>';return;}
+  var h="";
+  data.forEach(function(l){
+    var st=l.is_sold?"sold":(l.status||"active"),id=esc(l.id);
+    h+='<div class="ar"><div><div class="ar-name">'+esc(l.address)+' <span class="as-badge asb-'+esc(st)+'">'+esc(st)+'</span></div>';
+    h+='<div class="ar-meta">'+esc(l.type)+' · '+esc(l.subtype)+' · '+esc(l.city)+(l.sold_date?' · '+esc(l.sold_date):'')+'</div>';
+    h+='<div class="ar-acts"><button class="ar-btn ab-edit" data-id="'+id+'" onclick="editRow(this.dataset.id)">Edit</button>';
+    if(!l.is_sold)h+='<button class="ar-btn ab-tog" data-id="'+id+'" onclick="toggleStatus(this.dataset.id)">Status</button>';
+    h+='<button class="ar-btn ab-del" data-id="'+id+'" onclick="del(this.dataset.id)">Delete</button></div></div>';
+    h+='<div style="text-align:right"><div class="ar-price">'+esc(l.price)+'</div>';
+    if(l.sqft)h+='<div style="font-size:.7rem;color:var(--muted);">'+esc(l.sqft)+' sqft</div>';
+    if(l.beds)h+='<div style="font-size:.7rem;color:var(--muted);">'+esc(l.beds)+'bd/'+esc(l.baths)+'ba</div>';
+    h+='</div></div>';
+  });
+  c.innerHTML=h;
+}
+
+/* ---- photos: shrink in the browser, then upload to storage ---- */
+function shrink(file,maxSide,quality){
+  return new Promise(function(resolve,reject){
+    var r=new FileReader();
+    r.onerror=function(){reject(new Error("read"));};
+    r.onload=function(){
+      var im=new Image();
+      im.onerror=function(){reject(new Error("decode"));};
+      im.onload=function(){
+        var s=Math.min(1,maxSide/Math.max(im.width,im.height)),w=Math.round(im.width*s),h=Math.round(im.height*s);
+        var cv=document.createElement("canvas");cv.width=w;cv.height=h;
+        var cx=cv.getContext("2d");cx.fillStyle="#fff";cx.fillRect(0,0,w,h);cx.drawImage(im,0,0,w,h);
+        resolve(cv.toDataURL("image/jpeg",quality));
+      };
+      im.src=r.result;
+    };
+    r.readAsDataURL(file);
+  });
+}
+function setUp(on,msg){uploading=on;$("sv-btn").disabled=on;$("up-st").textContent=msg||"";}
+$("a-file").addEventListener("change",function(e){
+  var file=e.target.files[0];if(!file)return;
+  if(!/^image\//.test(file.type)){alert("Please choose an image file.");e.target.value="";return;}
+  setUp(true,"Uploading photo…");
+  shrink(file,1400,0.8).then(function(dataUrl){
+    $("img-prev-img").src=dataUrl;$("img-prev").style.display="block";
+    return api("upload",{dataUrl:dataUrl});
+  }).then(function(d){
+    if(d.ok){$("a-url").value=d.url;setUp(false,"Photo uploaded ✓");}
+    else{setUp(false,"");$("img-prev").style.display="none";$("a-file").value="";
+      if(d._status===401)showLogin("Your session ended. Please sign in again.");
+      else alert("Photo upload failed. "+(d.error==="too_large"?"The photo is too large.":"Please try again."));}
+  }).catch(function(){setUp(false,"");$("img-prev").style.display="none";$("a-file").value="";alert("That photo could not be read. Try a JPG or PNG.");});
+});
+</script>
+</body>
+</html>
