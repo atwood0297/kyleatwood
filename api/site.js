@@ -1,29 +1,11 @@
-/*
-  kyleatwood.com backend (one Vercel Function).
-
-  Routes (all via /api/site?action=...):
-    GET  list     public   - active + sold listings (cached ~60s at the edge)
-    GET  session  public   - { ok: true|false } is this browser logged in?
-    POST login    public   - checks ADMIN_PASSWORD, starts a signed session, locks out guessing
-    POST logout   admin    - ends the session
-    POST save     admin    - create or update a listing / closing
-    POST delete   admin    - delete a listing / closing
-    POST upload   admin    - upload one photo to Supabase Storage
-
-  Environment variables (Vercel -> Project -> Settings -> Environment Variables):
-    ADMIN_PASSWORD             the password you type to log in (you choose it)
-    SESSION_SECRET             a long random string (24+ characters) used to sign sessions
-    SUPABASE_URL               https://xxxx.supabase.co
-    SUPABASE_SECRET_KEY        the Supabase SECRET key, "sb_secret_..." (NEVER put this in the page).
-                               (Older projects: the legacy service_role key works here too, under either name.)
-*/
 const crypto = require('crypto');
 
 const COOKIE = 'kyle_admin';
 const SESSION_MS = 12 * 60 * 60 * 1000;      // stay logged in 12 hours
 const MAX_FAILS = 5;                          // wrong passwords allowed...
 const WINDOW_MS = 15 * 60 * 1000;             // ...per 15 minutes, per visitor
-const BUCKET = 'listing-photos';
+const DATA_PATH = 'data/listings.json';
+const OWN_BLOB = /^https:\/\/[a-z0-9-]+\.public\.blob\.vercel-storage\.com\//;
 const TYPES = ['Residential', 'Commercial RE', 'Business for Sale', 'Land', 'Investment'];
 const STATUSES = ['active', 'pending', 'sold'];
 
@@ -32,14 +14,12 @@ function getEnv() {
   const e = {
     pw: process.env.ADMIN_PASSWORD,
     secret: process.env.SESSION_SECRET,
-    url: process.env.SUPABASE_URL,
-    key: process.env.SUPABASE_SECRET_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY,
+    token: process.env.BLOB_READ_WRITE_TOKEN,
   };
   const missing = [];
   if (!e.pw) missing.push('ADMIN_PASSWORD');
   if (!e.secret || e.secret.length < 24) missing.push('SESSION_SECRET (24+ chars)');
-  if (!e.url) missing.push('SUPABASE_URL');
-  if (!e.key) missing.push('SUPABASE_SECRET_KEY');
+  if (!e.token) missing.push('BLOB_READ_WRITE_TOKEN (connect a Blob store)');
   e.ok = missing.length === 0;
   e.missing = missing;
   return e;
@@ -102,26 +82,29 @@ function setSession(req, res, token, maxAgeSec) {
   res.setHeader('Set-Cookie', `${COOKIE}=${token}; HttpOnly; SameSite=Strict; Path=/; Max-Age=${maxAgeSec}${secure}`);
 }
 
-/* ---------- Supabase (server-side only) ---------- */
-async function sb(env, path, opts) {
-  opts = opts || {};
-  // New-style keys (sb_secret_...) are NOT JWTs and must go in the apikey header only.
-  // Legacy keys (long JWTs starting "eyJ") are also sent as the Bearer token.
-  const base = { apikey: env.key };
-  if (/^eyJ/.test(env.key)) base.Authorization = 'Bearer ' + env.key;
-  const headers = Object.assign(base, opts.headers || {});
-  let body = opts.body;
-  if (body !== undefined && !opts.raw) { headers['Content-Type'] = 'application/json'; body = JSON.stringify(body); }
-  const r = await fetch(env.url.replace(/\/$/, '') + path, { method: opts.method || 'GET', headers, body });
-  const text = await r.text();
-  let data = null;
-  try { data = text ? JSON.parse(text) : null; } catch (e) { data = text; }
-  return { ok: r.ok, status: r.status, data };
+/* ---------- Vercel Blob (server-side only) ---------- */
+const blobLib = () => module.exports._blob || require('@vercel/blob');
+// Read a JSON blob by path. Returns null if it does not exist. Cache-busted so we never read stale data.
+async function readJson(path) {
+  const B = blobLib();
+  let meta;
+  try { meta = await B.head(path); }
+  catch (e) { if (e && (e.name === 'BlobNotFoundError' || /not.?found/i.test(e.message || ''))) return null; throw e; }
+  const r = await fetch(meta.url + (meta.url.indexOf('?') < 0 ? '?' : '&') + 't=' + Date.now(), { cache: 'no-store' });
+  if (!r.ok) throw new Error('blob read ' + r.status);
+  return r.json();
 }
+async function writeJson(path, obj) {
+  await blobLib().put(path, JSON.stringify(obj), {
+    access: 'public', contentType: 'application/json', addRandomSuffix: false, allowOverwrite: true, cacheControlMaxAge: 60,
+  });
+}
+async function loadListings() { const d = await readJson(DATA_PATH); return Array.isArray(d) ? d : []; }
+const byNewest = (a, b) => String(b.created_at || '').localeCompare(String(a.created_at || ''));
 
 /* ---------- validation (only these fields are ever stored) ---------- */
 function str(v, max) { return String(v == null ? '' : v).trim().slice(0, max); }
-function cleanListing(l, env) {
+function cleanListing(l) {
   if (!l || typeof l !== 'object') return { error: 'Invalid listing.' };
   const type = str(l.type, 40);
   if (TYPES.indexOf(type) < 0) return { error: 'Choose a valid type.' };
@@ -135,8 +118,7 @@ function cleanListing(l, env) {
   const sold_date = str(l.sold_date, 10);
   if (sold_date && !/^\d{4}-\d{2}-\d{2}$/.test(sold_date)) return { error: 'Sold date must be a valid date.' };
   const image = str(l.image, 600);
-  const ownStorage = env.url.replace(/\/$/, '') + '/storage/v1/object/public/' + BUCKET + '/';
-  if (image && !(image.indexOf(ownStorage) === 0 || /^https:\/\/[^\s"'<>]+$/.test(image)) || /[\s"'<>]/.test(image)) return { error: 'Photo must be an https link or an uploaded photo.' };
+  if (image && (!(OWN_BLOB.test(image) || /^https:\/\/[^\s"'<>]+$/.test(image)) || /[\s"'<>]/.test(image))) return { error: 'Photo must be an https link or an uploaded photo.' };
   return {
     row: {
       is_sold, status, type,
@@ -179,12 +161,12 @@ module.exports = async function handler(req, res) {
     /* ----- public ----- */
     if (action === 'list' && (method === 'GET' || method === 'HEAD')) {
       const fresh = url.searchParams.get('fresh');
-      const r = await sb(env, '/rest/v1/listings?select=*&order=created_at.desc&limit=500');
-      if (!r.ok) { console.error('list failed', r.status, r.data); return send(res, 502, { error: 'unavailable' }); }
+      let list;
+      try { list = (await loadListings()).sort(byNewest); } catch (e) { console.error('list failed', e && e.message); return send(res, 502, { error: 'unavailable' }); }
       // Browsers always re-check (so visitors never see stale listings);
       // Vercel's edge cache holds it for 60s so the database is not hit on every view.
       if (!fresh) res.setHeader('Vercel-CDN-Cache-Control', 'max-age=60, stale-while-revalidate=300');
-      return send(res, 200, { listings: r.data || [], configured: true },
+      return send(res, 200, { listings: list, configured: true },
         fresh ? 'no-store' : 'public, max-age=0, must-revalidate');
     }
     if (action === 'session' && (method === 'GET' || method === 'HEAD')) return send(res, 200, { ok: isAuthed(req, env) });
@@ -197,14 +179,16 @@ module.exports = async function handler(req, res) {
     if (action === 'login') {
       const ip = String(req.headers['x-forwarded-for'] || (req.socket && req.socket.remoteAddress) || '').split(',')[0].trim();
       const ipHash = sha(ip + '|' + env.secret);
-      const since = new Date(Date.now() - WINDOW_MS).toISOString();
-      const q = await sb(env, `/rest/v1/login_attempts?select=at&ip_hash=eq.${ipHash}&at=gte.${encodeURIComponent(since)}`);
-      if (!q.ok || !Array.isArray(q.data)) { console.error('attempt check failed', q.status, q.data); return send(res, 503, { error: 'unavailable' }); }
-      if (q.data.length >= MAX_FAILS) return send(res, 429, { error: 'locked' });
+      const attemptsPath = 'auth/' + ipHash + '.json';
+      let fails = [];
+      try { const d = await readJson(attemptsPath); fails = (Array.isArray(d) ? d : []).filter((t) => t > Date.now() - WINDOW_MS); }
+      catch (e) { console.error('attempt check failed', e && e.message); return send(res, 503, { error: 'unavailable' }); }
+      if (fails.length >= MAX_FAILS) return send(res, 429, { error: 'locked' });
       const body = await readBody(req);
       const pwd = String((body && body.password) || '');
       if (!pwd || !safeEqual(pwd, env.pw)) {
-        await sb(env, '/rest/v1/login_attempts', { method: 'POST', body: { ip_hash: ipHash }, headers: { Prefer: 'return=minimal' } });
+        fails.push(Date.now());
+        try { await writeJson(attemptsPath, fails); } catch (e) { console.error('attempt write failed', e && e.message); }
         await sleep(500);
         return send(res, 401, { error: 'invalid' });
       }
@@ -220,29 +204,39 @@ module.exports = async function handler(req, res) {
     if (action === 'save') {
       const body = await readBody(req);
       if (!body) return send(res, 400, { error: 'bad_request' });
-      const c = cleanListing(body.listing, env);
+      const c = cleanListing(body.listing);
       if (c.error) return send(res, 400, { error: 'invalid', message: c.error });
+      let list;
+      try { list = await loadListings(); } catch (e) { console.error('load failed', e && e.message); return send(res, 502, { error: 'save_failed' }); }
+      const now = new Date().toISOString();
+      let saved;
       if (body.id) {
         if (!SAFE_ID.test(String(body.id))) return send(res, 400, { error: 'bad_id' });
-        const r = await sb(env, `/rest/v1/listings?id=eq.${encodeURIComponent(body.id)}`,
-          { method: 'PATCH', body: Object.assign({ updated_at: new Date().toISOString() }, c.row), headers: { Prefer: 'return=representation' } });
-        if (!r.ok) { console.error('update failed', r.status, r.data); return send(res, 502, { error: 'save_failed' }); }
-        if (!r.data || !r.data.length) return send(res, 404, { error: 'not_found' });
-        return send(res, 200, { ok: true, listing: r.data[0] });
+        const i = list.findIndex((x) => x.id === body.id);
+        if (i < 0) return send(res, 404, { error: 'not_found' });
+        saved = Object.assign({}, list[i], c.row, { id: list[i].id, updated_at: now });
+        list[i] = saved;
+      } else {
+        saved = Object.assign({ id: 'lst_' + Date.now().toString(36) + crypto.randomBytes(4).toString('hex'), created_at: now, updated_at: now }, c.row);
+        list.push(saved);
       }
-      const id = 'lst_' + Date.now().toString(36) + crypto.randomBytes(4).toString('hex');
-      const r = await sb(env, '/rest/v1/listings', { method: 'POST', body: Object.assign({ id }, c.row), headers: { Prefer: 'return=representation' } });
-      if (!r.ok) { console.error('insert failed', r.status, r.data); return send(res, 502, { error: 'save_failed' }); }
-      return send(res, 200, { ok: true, listing: r.data[0] });
+      try { await writeJson(DATA_PATH, list); } catch (e) { console.error('save failed', e && e.message); return send(res, 502, { error: 'save_failed' }); }
+      return send(res, 200, { ok: true, listing: saved, listings: list.slice().sort(byNewest) });
     }
 
     if (action === 'delete') {
       const body = await readBody(req);
       const id = body && String(body.id || '');
       if (!SAFE_ID.test(id)) return send(res, 400, { error: 'bad_id' });
-      const r = await sb(env, `/rest/v1/listings?id=eq.${encodeURIComponent(id)}`, { method: 'DELETE', headers: { Prefer: 'return=minimal' } });
-      if (!r.ok) { console.error('delete failed', r.status, r.data); return send(res, 502, { error: 'delete_failed' }); }
-      return send(res, 200, { ok: true });
+      let list;
+      try { list = await loadListings(); } catch (e) { console.error('load failed', e && e.message); return send(res, 502, { error: 'delete_failed' }); }
+      const gone = list.find((x) => x.id === id);
+      list = list.filter((x) => x.id !== id);
+      try { await writeJson(DATA_PATH, list); } catch (e) { console.error('delete failed', e && e.message); return send(res, 502, { error: 'delete_failed' }); }
+      if (gone && gone.image && OWN_BLOB.test(gone.image) && !list.some((x) => x.image === gone.image)) {
+        try { await blobLib().del(gone.image); } catch (e) { /* photo cleanup is best-effort */ }
+      }
+      return send(res, 200, { ok: true, listings: list.slice().sort(byNewest) });
     }
 
     if (action === 'upload') {
@@ -253,10 +247,11 @@ module.exports = async function handler(req, res) {
       if (buf.length > 3 * 1024 * 1024) return send(res, 413, { error: 'too_large' });
       const kind = sniffImage(buf);
       if (!kind) return send(res, 400, { error: 'bad_image' });
-      const name = `${Date.now().toString(36)}-${crypto.randomBytes(5).toString('hex')}.${kind.ext}`;
-      const r = await sb(env, `/storage/v1/object/${BUCKET}/${name}`, { method: 'POST', raw: true, body: buf, headers: { 'Content-Type': kind.mime, 'x-upsert': 'false' } });
-      if (!r.ok) { console.error('upload failed', r.status, r.data); return send(res, 502, { error: 'upload_failed' }); }
-      return send(res, 200, { ok: true, url: `${env.url.replace(/\/$/, '')}/storage/v1/object/public/${BUCKET}/${name}` });
+      const name = `photos/${Date.now().toString(36)}-${crypto.randomBytes(5).toString('hex')}.${kind.ext}`;
+      try {
+        const r = await blobLib().put(name, buf, { access: 'public', contentType: kind.mime, addRandomSuffix: false, cacheControlMaxAge: 31536000 });
+        return send(res, 200, { ok: true, url: r.url });
+      } catch (e) { console.error('upload failed', e && e.message); return send(res, 502, { error: 'upload_failed' }); }
     }
 
     return send(res, 404, { error: 'unknown_action' });
@@ -265,3 +260,4 @@ module.exports = async function handler(req, res) {
     return send(res, 500, { error: 'server' });
   }
 };
+
