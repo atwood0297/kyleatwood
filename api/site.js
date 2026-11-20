@@ -1,3 +1,20 @@
+/*
+  kyleatwood.com backend (one Vercel Function, storage = Vercel Blob).
+
+  Routes (all via /api/site?action=...):
+    GET  list     public   - active + sold listings (cached ~60s at the edge)
+    GET  session  public   - { ok: true|false } is this browser logged in?
+    POST login    public   - checks ADMIN_PASSWORD, starts a signed session, locks out guessing
+    POST logout   admin    - ends the session
+    POST save     admin    - create or update a listing / closing
+    POST delete   admin    - delete a listing / closing
+    POST upload   admin    - upload one photo to Vercel Blob
+
+  Environment variables (Vercel -> Project -> Settings -> Environment Variables):
+    ADMIN_PASSWORD        the password you type to log in (you choose it)
+    SESSION_SECRET        a long random string (24+ characters) used to sign sessions
+    BLOB_READ_WRITE_TOKEN added automatically when you connect a PUBLIC Blob store to the project
+*/
 const crypto = require('crypto');
 
 const COOKIE = 'kyle_admin';
@@ -153,8 +170,8 @@ module.exports = async function handler(req, res) {
     // Not configured yet: say so (privately in the logs, generically to the browser).
     if (!env.ok) {
       console.error('Backend not configured. Missing: ' + env.missing.join(', '));
-      if (action === 'list') return send(res, 200, { listings: [], configured: false });
-      if (action === 'session') return send(res, 200, { ok: false, configured: false });
+      if (action === 'list') return send(res, 200, { listings: [], configured: false, missing: env.missing });
+      if (action === 'session') return send(res, 200, { ok: false, configured: false, missing: env.missing });
       return send(res, 503, { error: 'not_configured' });
     }
 
