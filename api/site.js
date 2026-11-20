@@ -106,7 +106,7 @@ async function readJson(path) {
   const B = blobLib();
   let meta;
   try { meta = await B.head(path); }
-  catch (e) { if (e && (e.name === 'BlobNotFoundError' || /not.?found/i.test(e.message || ''))) return null; throw e; }
+  catch (e) { if (e && ((B.BlobNotFoundError && e instanceof B.BlobNotFoundError) || e.name === 'BlobNotFoundError' || /not.?found|does not exist|404/i.test(e.message || ''))) return null; console.error('blob head error', e && e.name, e && e.message); throw e; }
   const r = await fetch(meta.url + (meta.url.indexOf('?') < 0 ? '?' : '&') + 't=' + Date.now(), { cache: 'no-store' });
   if (!r.ok) throw new Error('blob read ' + r.status);
   return r.json();
