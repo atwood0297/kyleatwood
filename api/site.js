@@ -126,7 +126,7 @@ function cleanListing(l) {
   const type = str(l.type, 40);
   if (TYPES.indexOf(type) < 0) return { error: 'Choose a valid type.' };
   const address = str(l.address, 160), price = str(l.price, 40);
-  if (!address || !price) return { error: 'Address and price are required.' };
+  if (!price) return { error: 'Price is required.' };
   const agent = str(l.agent, 80);
   if (!agent) return { error: 'Listing agent is required. It is credited on the listing.' };
   const is_sold = l.is_sold === true;
@@ -268,7 +268,7 @@ module.exports = async function handler(req, res) {
       try {
         const r = await blobLib().put(name, buf, { access: 'public', contentType: kind.mime, addRandomSuffix: false, cacheControlMaxAge: 31536000 });
         return send(res, 200, { ok: true, url: r.url });
-      } catch (e) { console.error('upload failed', e && e.message); return send(res, 502, { error: 'upload_failed' }); }
+      } catch (e) { console.error('upload failed', e && e.message); return send(res, 502, { error: 'upload_failed', message: String((e && e.message) || '').slice(0, 200) }); }
     }
 
     return send(res, 404, { error: 'unknown_action' });
