@@ -292,7 +292,7 @@ function counts(){
   });
 }
 function cardHtml(l){
-  var img=l.image?'<img src="'+esc(l.image)+'" alt="'+esc(l.address)+'" loading="lazy"/>':typeIcon(l.type);
+  var img=l.image?'<img src="'+esc(l.image)+'" alt="'+esc((l.address||(l.subtype||l.type)+' in '+(l.city||'Ohio')))+'" loading="lazy"/>':typeIcon(l.type);
   var bc=l.status==="sold"?"lcard-badge sold":l.status==="pending"?"lcard-badge pending":"lcard-badge";
   var bl=l.status==="sold"?"Sold":l.status==="pending"?"Pending":esc(l.type);
   var m="";
@@ -305,12 +305,12 @@ function cardHtml(l){
   return '<div class="lcard" id="'+esc(l.id)+'">'
     +'<a class="lcard-imglink" href="/listing?id='+encodeURIComponent(l.id)+'"><div class="lcard-img">'+img+'<span class="'+bc+'">'+bl+'</span></div></a>'
     +'<div class="lcard-body"><a class="lcard-main" href="/listing?id='+encodeURIComponent(l.id)+'"><div class="lcard-price">'+esc(l.price)+'</div>'
-    +'<div class="lcard-addr">'+esc(l.address)+'</div>'
+    +'<div class="lcard-addr">'+esc((l.address||(l.subtype||l.type)+' in '+(l.city||'Ohio')))+'</div>'
     +'<div class="lcard-type">'+esc(l.subtype)+' · '+esc(l.city)+', OH</div></a>'
     +'<div class="lcard-agent">Listing courtesy of '+esc(l.agent)+', '+esc(l.brokerage||'ERA Martin & Associates')+'.</div>'
     +d
     +(m?'<div class="lcard-meta">'+m+'</div>':"")
-    +'<div class="lcard-btns"><a href="/listing?id='+encodeURIComponent(l.id)+'" class="lcard-btn">Details</a><a href="tel:7406498109" class="lcard-btn">Call</a><a href="/contact?re='+encodeURIComponent(l.address||'')+'" class="lcard-btn">Inquire</a></div>'
+    +'<div class="lcard-btns"><a href="/listing?id='+encodeURIComponent(l.id)+'" class="lcard-btn">Details</a><a href="tel:7406498109" class="lcard-btn">Call</a><a href="/contact?re='+encodeURIComponent((l.address||(l.subtype||l.type)+' in '+(l.city||'Ohio')))+'" class="lcard-btn">Inquire</a></div>'
     +'</div></div>';
 }
 function render(data,label){
