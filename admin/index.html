@@ -312,8 +312,8 @@ body{background:var(--dark);}
 
       <div class="fsec">Property Details</div>
       <div class="field">
-        <label>Address / Name *</label>
-        <input type="text" id="a-addr" placeholder="123 Maple St or 'Confidential – HVAC Business'"/>
+        <label>Address / Name (optional)</label>
+        <input type="text" id="a-addr" placeholder="Optional. Leave blank to hide the address"/>
       </div>
       <div class="frow">
         <div class="field"><label>City *</label><input type="text" id="a-city" placeholder="Chillicothe"/></div>
@@ -447,7 +447,7 @@ function fail(d){
 function save(){
   if(uploading){alert("Please wait for the photo to finish uploading.");return;}
   var l=readForm(currentTab==="sold");
-  if(!l.type||!l.address.trim()||!l.price.trim()){alert("Type, Address, and Price are required.");return;}
+  if(!l.type||!l.price.trim()){alert("Type and Price are required.");return;}
   if(!l.agent.trim()){alert("Enter the listing agent. Their name is credited on the listing.");$("a-agent").focus();return;}
   var btn=$("sv-btn"),label=btn.textContent;btn.disabled=true;btn.textContent="Saving…";
   api("save",{id:editId||undefined,listing:l}).then(function(d){
@@ -500,7 +500,7 @@ function renderTable(){
   var h="";
   data.forEach(function(l){
     var st=l.is_sold?"sold":(l.status||"active"),id=esc(l.id);
-    h+='<div class="ar"><div><div class="ar-name">'+esc(l.address)+' <span class="as-badge asb-'+esc(st)+'">'+esc(st)+'</span></div>';
+    h+='<div class="ar"><div><div class="ar-name">'+esc((l.address||(l.subtype||l.type)+' in '+(l.city||'Ohio')))+' <span class="as-badge asb-'+esc(st)+'">'+esc(st)+'</span></div>';
     h+='<div class="ar-meta">'+esc(l.type)+' · '+esc(l.subtype)+' · '+esc(l.city)+(l.sold_date?' · '+esc(l.sold_date):'')+'</div>';
     h+='<div class="ar-acts"><button class="ar-btn ab-edit" data-id="'+id+'" onclick="editRow(this.dataset.id)">Edit</button>';
     if(!l.is_sold)h+='<button class="ar-btn ab-tog" data-id="'+id+'" onclick="toggleStatus(this.dataset.id)">Status</button>';
@@ -544,7 +544,7 @@ $("a-file").addEventListener("change",function(e){
     if(d.ok){$("a-url").value=d.url;setUp(false,"Photo uploaded ✓");}
     else{setUp(false,"");$("img-prev").style.display="none";$("a-file").value="";
       if(d._status===401)showLogin("Your session ended. Please sign in again.");
-      else alert("Photo upload failed. "+(d.error==="too_large"?"The photo is too large.":"Please try again."));}
+      else alert("Photo upload failed. "+(d.error==="too_large"?"The photo is too large.":"Please try again.")+(d.message?"\n\nDetails: "+d.message:""));}
   }).catch(function(){setUp(false,"");$("img-prev").style.display="none";$("a-file").value="";alert("That photo could not be read. Try a JPG or PNG.");});
 });
 </script>
