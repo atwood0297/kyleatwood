@@ -281,30 +281,27 @@ a{color:inherit;text-decoration:none;}img{display:block;max-width:100%;}
 </section>
 
 <script>
-var SOLD = JSON.parse(localStorage.getItem("era_listings")||"[]").filter(function(l){return l.is_sold;});
-
+var SOLD=[];
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+function typeIcon(t){var i={"Residential":"🏠","Commercial RE":"🏢","Business for Sale":"🤝","Land":"🌾","Investment":"📈"};return i[t]||"🏢";}
+function loadListings(){return fetch('/api/site?action=list').then(function(r){return r.ok?r.json():{listings:[]};}).then(function(d){return d.listings||[];}).catch(function(){return [];});}
 function soldStats(){
   document.getElementById("total-sold").textContent = SOLD.length;
   if(SOLD.length){
-    var vol = SOLD.reduce(function(sum,l){
-      var n = parseFloat((l.price||"").replace(/[^0-9.]/g,""));
-      return sum + (isNaN(n)?0:n);
-    },0);
+    var vol = SOLD.reduce(function(sum,l){var n=parseFloat((l.price||"").replace(/[^0-9.]/g,""));return sum+(isNaN(n)?0:n);},0);
     document.getElementById("total-vol").textContent = vol>=1000000?"$"+(vol/1000000).toFixed(1)+"M":vol>=1000?"$"+(vol/1000).toFixed(0)+"K":"$"+vol.toFixed(0);
-    var years = SOLD.map(function(l){return l.sold_date?(new Date(l.sold_date)).getFullYear():null;}).filter(Boolean);
+    var years = SOLD.map(function(l){return l.sold_date?parseInt(String(l.sold_date).slice(0,4),10):null;}).filter(function(y){return y&&!isNaN(y);});
     if(years.length) document.getElementById("latest-year").textContent = Math.max.apply(null,years);
   }
 }
-
 function soldCard(l){
-  var img = l.image?'<img src="'+l.image+'" alt="'+l.address+'" loading="lazy"/>':typeIcon(l.type);
-  return '<div class="scard"><div class="scard-img">'+img+'<span class="scard-badge">'+l.type+'</span></div>'
-    +'<div class="scard-body"><div class="scard-price">'+l.price+'</div>'
-    +'<div class="scard-addr">'+l.address+'</div>'
-    +'<div class="scard-meta">'+l.subtype+(l.city?', '+l.city:'')+(l.sold_date?' · '+l.sold_date:'')+'</div>'
+  var img = l.image?'<img src="'+esc(l.image)+'" alt="'+esc((l.address||(l.subtype||l.type)+' in '+(l.city||'Ohio')))+'" loading="lazy"/>':typeIcon(l.type);
+  return '<div class="scard"><div class="scard-img">'+img+'<span class="scard-badge">'+esc(l.type)+'</span></div>'
+    +'<div class="scard-body"><div class="scard-price">'+esc(l.price)+'</div>'
+    +'<div class="scard-addr">'+esc((l.address||(l.subtype||l.type)+' in '+(l.city||'Ohio')))+'</div>'
+    +'<div class="scard-meta">'+esc(l.subtype)+(l.city?', '+esc(l.city):'')+(l.sold_date?' · '+esc(l.sold_date):'')+'</div>'
     +'</div></div>';
 }
-function typeIcon(t){var i={"Residential":"🏠","Commercial RE":"🏢","Business for Sale":"🤝","Land":"🌾","Investment":"📈"};return i[t]||"🏢";}
 function renderSold(data){
   var out = document.getElementById("sold-out");
   if(!data.length){
@@ -319,8 +316,11 @@ function soldFilter(btn){
   var f=btn.getAttribute("data-f");
   renderSold(f==="all"?SOLD:SOLD.filter(function(l){return l.type===f;}));
 }
-soldStats();
-renderSold(SOLD);
+document.getElementById("sold-out").innerHTML='<div class="empty-sold"><p>Loading closings…</p></div>';
+loadListings().then(function(list){
+  SOLD=list.filter(function(l){return l.is_sold;});
+  soldStats();renderSold(SOLD);
+});
 </script>
 
 <footer class="site-footer">
